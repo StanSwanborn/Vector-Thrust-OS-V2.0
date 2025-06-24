@@ -1,3 +1,67 @@
-updatenotes
-tags
-gamecode
+# Build results
+[Bb]in/
+[Oo]bj/
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+
+# User-specific files
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Visual Studio Code workspace
+.vscode/
+
+# Rider
+.idea/
+
+# NuGet packages
+*.nupkg
+**/packages/*
+!**/packages/build/
+
+# Logs and test results
+*.log
+TestResult*/
+*.vspscc
+*.vssscc
+
+# Visual Studio profiler
+*.psess
+*.vsp
+*.vspx
+
+# ReSharper
+_ReSharper*/
+*.DotSettings.user
+
+# Others
+*.cache
+*.dbmdl
+*.pdb
+*.tmp
+*.bak
+*.swp
+*.sdf
+*.opensdf
+*.VC.db
+
+# Publish and deployment
+publish/
+*.Publish.xml
+
+# Windows image file caches
+Thumbs.db
+ehthumbs.db
+
+# OS generated files
+.DS_Store
+
+# GitHub Copilot (if local indices or metadata are stored)
+.copilot/
+.copilot-index/
+*.copilot-index
+/Mdk.VectorThrustOSV2.0/.vs/Mdk.VectorThrustOSV2.0
