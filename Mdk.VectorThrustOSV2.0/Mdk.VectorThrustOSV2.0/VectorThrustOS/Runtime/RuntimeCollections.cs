@@ -1,4 +1,5 @@
 ﻿using IngameScript.VectorThrustOS.Controllers;
+using SpaceEngineers.Game.ModAPI.Ingame;
 using System.Collections.Generic;
 using Sandbox.ModAPI.Ingame;
 
@@ -16,7 +17,7 @@ namespace IngameScript.VectorThrustOS.Runtime
         public List<IMyShipConnector> Connectors { get; } = new();
         public List<IMyLandingGear> LandingGears { get; } = new();
         public List<IMyGasTank> TankBlocks { get; set; } = new();
-        public List<IMyTerminalBlock> CruiseThrottle { get; } = new();
+        public List<IMyTerminalBlock> CruiseThrottleCollection { get; } = new();
         public List<List<VectorThrust>> VTThrottleGroups { get; } = new();
         public List<Surface> Surfaces { get; set; } = new();
         public List<IMyThrust> VTThrusters { get; set; } = new();
@@ -35,7 +36,7 @@ namespace IngameScript.VectorThrustOS.Runtime
         public List<IMyBatteryBlock> BatteriesBlocks { get; set; } = new();
         public List<IMyTerminalBlock> BatteriesSequence { get; set; } = new();
         public List<IMyTerminalBlock> AllBlocks { get; } = new();
-        public List<double> OutputBatsSeq { get; set; } = new();
+        public List<double> OutputBatteriesSequence { get; set; } = new();
         public List<double> Tets { get; set; } = new();
         public List<int> TDividers { get; set; } = new() { 1, 1 };
         public Dictionary<string, object> CMInputs { get; set; }

@@ -1,35 +1,38 @@
-﻿using System.Collections.Generic;
+﻿using IngameScript.VectorThrustOS.Architecture.Abstractions;
+using System.Collections.Generic;
+using System;
 
-namespace IngameScript.VectorThrustOS.Sequences
+namespace IngameScript.VectorThrustOS.SequenceRuntime
 {
-    internal class SequenceAssigner //Modified SimpleTimerSM by Digi
+    internal class SequenceAssigner<T> where T : BaseSequence<T> //Modified SimpleTimerSM by Digi, and then modified again by StanSwanborn (2025/06)
     {
         public bool AutoStart { get; set; }
         public bool Running { get; private set; }
+
+        private readonly T _assignedSequence;
         public IEnumerable<int> Sequence;
-        private IEnumerator<int> sequenceSM;
+        private IEnumerator<int> sequenceStateMachine;
 
         public int SequenceCount { get; private set; }
         public bool Doneloop { get; set; }
 
-        public SequenceAssigner(IEnumerable<int> sequence = null, bool autoStart = false)
+        public SequenceAssigner(Func<SequenceAssigner<T>, T> assignedSequenceCtor, bool autoStart = false)
         {
-            Sequence = sequence;
+            _assignedSequence = assignedSequenceCtor(this);
+            Sequence = _assignedSequence.Process();
             AutoStart = autoStart;
 
-            if (AutoStart)
-            {
-                Start();
-            }
+            if (AutoStart) Start();
         }
         public void Start()
         {
             Doneloop = false;
-            SetSequenceSM(Sequence);
+            SetSequenceStateMachine(Sequence);
         }
+
         public void Run()
         {
-            if (sequenceSM == null)
+            if (sequenceStateMachine == null)
                 return;
 
             if (SequenceCount > 0)
@@ -38,11 +41,11 @@ namespace IngameScript.VectorThrustOS.Sequences
                 return;
             }
 
-            bool hasValue = sequenceSM.MoveNext();
+            bool hasValue = sequenceStateMachine.MoveNext();
 
             if (hasValue)
             {
-                SequenceCount = sequenceSM.Current;
+                SequenceCount = sequenceStateMachine.Current;
 
                 if (SequenceCount <= -1)
                     hasValue = false;
@@ -51,24 +54,24 @@ namespace IngameScript.VectorThrustOS.Sequences
             if (!hasValue)
             {
                 if (AutoStart)
-                    SetSequenceSM(Sequence);
+                    SetSequenceStateMachine(Sequence);
                 else
-                    SetSequenceSM(null);
+                    SetSequenceStateMachine(null);
             }
         }
 
-        private void SetSequenceSM(IEnumerable<int> seq)
+        private void SetSequenceStateMachine(IEnumerable<int> seq)
         {
             Running = false;
             SequenceCount = 0;
 
-            sequenceSM?.Dispose();
-            sequenceSM = null;
+            sequenceStateMachine?.Dispose();
+            sequenceStateMachine = null;
 
             if (seq != null)
             {
                 Running = true;
-                sequenceSM = seq.GetEnumerator();
+                sequenceStateMachine = seq.GetEnumerator();
             }
         }
 

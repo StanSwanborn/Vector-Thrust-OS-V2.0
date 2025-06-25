@@ -7,11 +7,11 @@ namespace IngameScript.VectorThrustOS.Architecture.Abstractions
     {
         public T TheBlock { get; set; }
 
-        public Program p;
+        public MyGridProgram Program { get; private set; }
 
-        public BlockWrapper(T block, Program p)
+        public BlockWrapper(T block, MyGridProgram program)
         {
-            this.p = p;
+            Program = program;
             TheBlock = block;
         }
 

@@ -10,7 +10,7 @@ namespace IngameScript.VectorThrustOS.Controllers
         public List<IMyThrust> nThrusters = new();
         public List<IMyThrust> cruiseThrusters = new();
 
-        public ShipController(IMyShipController theBlock, Program program) : base(theBlock, program) =>
+        public ShipController(IMyShipController theBlock, MyGridProgram program) : base(theBlock, program) =>
             Dampener = theBlock.DampenersOverride;
 
         public void SetDampener(bool val)
