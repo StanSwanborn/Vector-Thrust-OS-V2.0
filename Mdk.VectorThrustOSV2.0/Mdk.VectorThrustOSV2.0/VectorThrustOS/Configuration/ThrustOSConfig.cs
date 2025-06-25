@@ -1,8 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using IngameScript.VectorThrustOS.Architecture.Interfaces;
+using System;
+using System.Collections.Generic;
 
-namespace IngameScript.VectorThrustOSV2.Configuration
+namespace IngameScript.VectorThrustOS.Configuration
 {
-    internal class ThrustOSConfig
+    internal class ThrustOSConfig : ILoadFromStorage
     {
         public string MyName { get; set; }
         public List<double> Aggressivity { get; set; }
@@ -39,41 +41,50 @@ namespace IngameScript.VectorThrustOSV2.Configuration
         public ThrustOSConfig()
         {
             // Default configuration values
-            MyName                  = "VT";
-            Aggressivity            = new List<double> { 0.1, 1, 4 };
-            ErrorMargin             = 6f;
-            LowThrustCutOn          = 0.5;
-            LowThrustCutOff         = 0.01;
-            LowThrustCutCruiseOn    = 1;
-            LowThrustCutCruiseOff   = 0.15;
+            MyName = "VT";
+            Aggressivity = new List<double> { 0.1, 1, 4 };
+            ErrorMargin = 6f;
+            LowThrustCutOn = 0.5;
+            LowThrustCutOff = 0.01;
+            LowThrustCutCruiseOn = 1;
+            LowThrustCutCruiseOff = 0.15;
 
-            VelPrecisionMode        = 1;
+            VelPrecisionMode = 1;
 
-            Accelerations           = new List<double> { 15, 50, 100 };
+            Accelerations = new List<double> { 15, 50, 100 };
             Gear = 0;
             GearAccel = 0;
 
-            TurnOffThrustersOnPark  = true;
-            RechargeOnPark          = true;
-            BackupSubstring         = "Backup";
-            RenameBackupSubstring   = true;
-            PerformanceWhilePark    = false;
-            AutoAddGridConnectors   = false;
+            TurnOffThrustersOnPark = true;
+            RechargeOnPark = true;
+            BackupSubstring = "Backup";
+            RenameBackupSubstring = true;
+            PerformanceWhilePark = false;
+            AutoAddGridConnectors = false;
             AutoAddGridLandingGears = false;
-            ForceParkIfStatic       = true;
-            AllowPark               = false;
-            ThrDirMultiplier        = new List<double> { -1, -1, 0 };
-            ThrDirOverride          = false;
+            ForceParkIfStatic = true;
+            AllowPark = false;
+            ThrDirMultiplier = new List<double> { -1, -1, 0 };
+            ThrDirOverride = false;
 
-            ThrusterModifier        = 0.0000000001;
-            TagSurround             = new string[] { "|", "|" };
-            CruisePlane             = false;
-            FramesBetweenActions    = 1;
-            ShowMetrics             = false;
-            SkipFrames              = 0;
-            FramesPerPrint          = 10;
-            StockValues             = true;
-            OnlyMainCockpit         = false;
+            ThrusterModifier = 0.0000000001;
+            TagSurround = new string[] { "|", "|" };
+            CruisePlane = false;
+            FramesBetweenActions = 1;
+            ShowMetrics = false;
+            SkipFrames = 0;
+            FramesPerPrint = 10;
+            StockValues = true;
+            OnlyMainCockpit = false;
+        }
+
+        public void LoadFromStorage(string[] storageParts)
+        {
+            if (storageParts.Length > 1)
+                AllowPark = bool.Parse(storageParts[1]);
+
+            if (storageParts.Length > 2 && int.TryParse(storageParts[2], out var outGear))
+                Gear = Math.Min(outGear, Accelerations.Count - 1);
         }
     }
 }

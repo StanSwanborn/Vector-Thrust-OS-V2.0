@@ -1,6 +1,8 @@
-﻿namespace IngameScript.VectorThrustOSV2.Runtime
+﻿using IngameScript.VectorThrustOS.Architecture.Interfaces;
+
+namespace IngameScript.VectorThrustOS.Runtime
 {
-    internal class RuntimeProperties
+    internal class RuntimeProperties : ILoadFromStorage
     {
         /** Main Properties **/
         public bool DampChanged { get; set; }
@@ -29,7 +31,7 @@
         public bool Greedy { get; set; }
         public bool ThrustOn { get; set; }
         public bool RechargeCancelled { get; set; }
-        public bool ParkedWithCN { get; set; }
+        public bool ParkedWithConnector { get; set; }
         public bool UnparkedCompletely { get; set; }
         public bool ParkedCompletely { get; set; }
         public bool ChangedRuntime { get; set; }
@@ -59,6 +61,23 @@
             Tag = "|VT|";
             TextSurfaceKeyword = "VT:";
             LCDName = "VTLCD";
+        }
+
+        public void LoadFromStorage(string[] storageParts)
+        {
+            if (storageParts.Length > 0)
+            {
+                var tagParts = storageParts[0].Split(':');
+
+                if (tagParts.Length == 2)
+                {
+                    Tag = tagParts[0];
+                    Greedy = bool.Parse(tagParts[1]);
+                }
+            }
+
+            if (storageParts.Length > 3)
+                Cruise = bool.Parse(storageParts[3]);
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace IngameScript.VectorThrustOSV2.Runtime
+﻿namespace IngameScript.VectorThrustOS.Runtime
 {
     // Performance monitoring class that tracks the average and maximum runtime of the script.
     internal class ExponentialMovingAverage

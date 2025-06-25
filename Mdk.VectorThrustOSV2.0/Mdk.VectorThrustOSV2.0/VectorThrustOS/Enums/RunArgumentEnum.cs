@@ -1,4 +1,4 @@
-﻿namespace IngameScript.VectorThrustOSV2.Enums
+﻿namespace IngameScript.VectorThrustOS.Enums
 {
     internal enum RunArgumentEnum
     {

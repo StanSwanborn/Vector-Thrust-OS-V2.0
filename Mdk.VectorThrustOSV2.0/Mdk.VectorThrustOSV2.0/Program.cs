@@ -1,5 +1,5 @@
-﻿using IngameScript.VectorThrustOSV2;
-using IngameScript.VectorThrustOSV2.Enums;
+﻿using IngameScript.VectorThrustOS.Enums;
+using IngameScript.VectorThrustOS;
 using Sandbox.ModAPI.Ingame;
 using System;
 
@@ -7,13 +7,13 @@ namespace IngameScript
 {
     public partial class Program : MyGridProgram
     {
-        readonly VectorThrustOS _vectorThrustOS;
+        readonly VectorThrustOSProgram _vectorThrustOS;
 
         public Program()
         {
             Echo("Program() Start");
 
-            _vectorThrustOS = new VectorThrustOS(this);
+            _vectorThrustOS = new VectorThrustOSProgram(this);
 
             // Manually call Load, which is typically called automatically.
             Load();

@@ -1,4 +1,4 @@
-﻿namespace IngameScript.VectorThrustOSV2.Constants
+﻿namespace IngameScript.VectorThrustOS.Constants
 {
     internal static class ThrustOSConstants
     {

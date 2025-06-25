@@ -1,8 +1,8 @@
-﻿using IngameScript.VectorThrustOSV2.Configuration;
+﻿using IngameScript.VectorThrustOS.Configuration;
 using System.Collections.Generic;
 using Sandbox.ModAPI.Ingame;
 
-namespace IngameScript.VectorThrustOSV2.Runtime
+namespace IngameScript.VectorThrustOS.Runtime
 {
     internal class RuntimeTracker
     {
@@ -42,9 +42,25 @@ namespace IngameScript.VectorThrustOSV2.Runtime
             _thrustOSConfig     = thrustOSConfig;
             MaxFrameCapacity    = maxFrameCap;
             ExpMovingAvg        = new ExponentialMovingAverage(avgFrameCap);
-        }
 
-        public void ChangeAvgFrameCapacity(int newAvgFrameCapacity) => ExpMovingAvg = new ExponentialMovingAverage(newAvgFrameCapacity);
+            SetUpdateFrequency(UpdateFrequency.Update1);
+		}
+
+		public void ChangeRuntime(int updateFrequency = 0)
+		{
+			switch (updateFrequency)
+			{
+				case 0: SetUpdateFrequency(UpdateFrequency.Update1); break;
+				case 1: SetUpdateFrequency(UpdateFrequency.Update10); break;
+				case 2: SetUpdateFrequency(UpdateFrequency.Update100); break;
+				case 3: SetUpdateFrequency(UpdateFrequency.Once); break;
+				case 4: SetUpdateFrequency(UpdateFrequency.None); break;
+			};
+		}
+
+		private void SetUpdateFrequency(UpdateFrequency frequency) => _baseProgram.Runtime.UpdateFrequency = frequency;
+
+		public void ChangeAvgFrameCapacity(int newAvgFrameCapacity) => ExpMovingAvg = new ExponentialMovingAverage(newAvgFrameCapacity);
 
         public void Process()
         {

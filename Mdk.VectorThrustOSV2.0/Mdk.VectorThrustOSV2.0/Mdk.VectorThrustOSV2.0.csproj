@@ -24,6 +24,6 @@
     <AdditionalFiles Include="thumb.png" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="VectorThrustOSV2\Helpers\" />
+    <Folder Include="VectorThrustOS\Helpers\" />
   </ItemGroup>
 </Project>
